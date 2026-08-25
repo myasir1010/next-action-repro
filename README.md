@@ -2,6 +2,9 @@
 
 Next 16.2.10, React 19.2.4, next-intl 4.13.5, Node 24.18.0, Windows 11.
 
+> **Every measurement here is on Windows.** It has not been run on Linux or
+> macOS, so a platform-specific interaction is not ruled out.
+
 ## Symptom
 
 A Server Action submitted from `<form action={...}>` runs correctly on the
@@ -25,7 +28,7 @@ processed at all.
 npm install
 npm run build
 
-# reproduces: ~3 in 12
+# reproduces: 3-6 in 12
 PORT=3100 QUERIES=20 BULK_KEYS=1200 npx next start -p 3100
 
 # control, same build: never reproduces
@@ -51,7 +54,7 @@ and waits up to 15s for the invitation heading to leave
 | 0 | 0 of 12 |
 | 1 | 1 of 10 |
 | 5 | 2 of 10 |
-| 20 | 3–5 of 12 |
+| 20 | 3-6 of 12 |
 | 100 | 7 of 10 |
 
 They are ordinary `fetch` calls to this app's own `/api/ping`, so no database or
@@ -81,6 +84,12 @@ Each of these was added to a passing configuration and did **not** cause it:
 - middleware that awaits I/O and writes cookies onto `NextResponse.next()`
 - a real `supabase.auth.getUser()` in middleware, page and action
 - prefetching `<Link>`s alone
+
+## Verified from a clean clone
+
+`git clone`, `npm install`, `npm run build`, then the two commands above:
+**6 of 12** with `QUERIES=20`, **0 of 12** with `QUERIES=0`. No credentials, no
+configuration, nothing needed from outside the repo.
 
 ## Provenance
 
