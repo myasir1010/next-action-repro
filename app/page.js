@@ -34,12 +34,7 @@ export default async function Page({ searchParams }) {
     <main>
       <h1>Repro</h1>
       <Card goal={store.goal} />
-      <Bulk data={bulk} />
-      <nav>
-        {["a","b","c","d","e","f","g"].map((s) => (
-          <Link key={s} href={`/${s}`}>link {s}</Link>
-        ))}
-      </nav>
+      <Bulk data={bulk} />
     </main>
   );
 }

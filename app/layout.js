@@ -1,16 +1,7 @@
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-
-export default async function RootLayout({ children }) {
-  const messages = await getMessages();
-
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
