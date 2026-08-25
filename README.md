@@ -1,7 +1,12 @@
 # Next 16: a Server Action's result is silently dropped by the client
 
-Next 16.2.10, React 19.2.4, Node 24. Reproduced on Windows 11 and on
-`ubuntu-latest`. Dependencies: `next`, `react`, `react-dom`. Nothing else.
+Next 16.2.10, React 19.2.4, Node 24. Dependencies: `next`, `react`, `react-dom`.
+Nothing else.
+
+Reproduced on both platforms, at different rates. At `QUERIES=20`,
+`BULK_KEYS=4000`: **3 of 20 on Windows 11**, **1 of 20 on `ubuntu-latest`**. The
+control is 0 of 20 on both. The numbers in the tables below are the Windows
+ones unless stated.
 
 ## Symptom
 
