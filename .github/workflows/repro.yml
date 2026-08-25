@@ -26,17 +26,17 @@ jobs:
       # The reproducing configuration: the render makes 20 real outbound fetches.
       - name: 'QUERIES=20 (expected to fail some runs)'
         run: |
-          PORT=3100 QUERIES=20 BULK_KEYS=1200 npm start &
+          PORT=3100 QUERIES=20 BULK_KEYS=4000 npm start &
           until curl -sf -o /dev/null http://localhost:3100/; do sleep 1; done
-          QUERIES=20 N=12 npm run harness
+          QUERIES=20 N=20 npm run harness
           kill %1
 
       # The control: identical build, no outbound fetches. Expected 0 failures.
       - name: 'QUERIES=0 (control, expected 0 failures)'
         run: |
-          PORT=3100 QUERIES=0 BULK_KEYS=1200 npm start &
+          PORT=3100 QUERIES=0 BULK_KEYS=4000 npm start &
           until curl -sf -o /dev/null http://localhost:3100/; do sleep 1; done
-          QUERIES=0 N=12 npm run harness
+          QUERIES=0 N=20 npm run harness
           kill %1
 
       - name: How to read this
