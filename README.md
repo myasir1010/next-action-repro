@@ -2,9 +2,10 @@
 
 Next 16.2.10, React 19.2.4, next-intl 4.13.5, Node 24.18.0, Windows 11.
 
-> **The measurements below are on Windows.** The bundled GitHub Actions
-> workflow runs the same two configurations on Linux; see that run for a
-> second platform. macOS is untested.
+> **Reproduced on Windows and on Linux.** `ubuntu-latest` via the bundled
+> workflow: **3 of 12** with `QUERIES=20`, **0 of 12** with `QUERIES=0`, and the
+> same signature — a pass takes ~70ms, a failure never completes. macOS is
+> untested.
 
 ## Symptom
 
