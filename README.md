@@ -2,8 +2,9 @@
 
 Next 16.2.10, React 19.2.4, next-intl 4.13.5, Node 24.18.0, Windows 11.
 
-> **Every measurement here is on Windows.** It has not been run on Linux or
-> macOS, so a platform-specific interaction is not ruled out.
+> **The measurements below are on Windows.** The bundled GitHub Actions
+> workflow runs the same two configurations on Linux; see that run for a
+> second platform. macOS is untested.
 
 ## Symptom
 
@@ -26,24 +27,26 @@ processed at all.
 
 ```bash
 npm install
+npx playwright install chromium
 npm run build
 
 # reproduces: 3-6 in 12
-PORT=3100 QUERIES=20 BULK_KEYS=1200 npx next start -p 3100
+PORT=3100 QUERIES=20 BULK_KEYS=1200 npm start &
+QUERIES=20 npm run harness
 
 # control, same build: never reproduces
-PORT=3100 QUERIES=0 BULK_KEYS=1200 npx next start -p 3100
-```
-
-Then, from any checkout with playwright installed:
-
-```bash
-N=12 node harness.mjs
+PORT=3100 QUERIES=0 BULK_KEYS=1200 npm start &
+QUERIES=0 npm run harness
 ```
 
 The harness loads `/?reset=1`, clicks the button that reveals the form, submits,
 and waits up to 15s for the invitation heading to leave
-`document.body.innerText`. A pass takes ~100ms; a failure never completes.
+`document.body.innerText`. A pass takes ~100ms; a failure never completes. It
+prints `RESULT queries=<n> failed=<f> of <n>` and always exits 0 — it measures a
+rate rather than gating anything.
+
+`.github/workflows/repro.yml` runs both configurations on `ubuntu-latest`, so
+the rate can be checked on Linux without a Linux machine.
 
 ## What decides it
 
