@@ -1,3 +1,18 @@
+> ## Fixed in Next 16.3.3
+>
+> Measured back to back on one machine, same repo, same configuration
+> (`QUERIES=20 BULK_KEYS=4000`):
+>
+> | Next | Failures |
+> |---|---|
+> | 16.2.10 | 2 of 20 |
+> | **16.3.3** | **0 of 40** |
+>
+> At the 16.2.10 rate, 40 clean runs would happen by chance about 0.5% of the
+> time. **If you are hitting this, upgrade — there is nothing to report.** The
+> rest of this README is kept because it documents what triggers it, which is
+> not obvious and may matter to anyone pinned to 16.2.x.
+
 # Next 16: a Server Action's result is silently dropped by the client
 
 Next 16.2.10, React 19.2.4, Node 24. Dependencies: `next`, `react`, `react-dom`.
